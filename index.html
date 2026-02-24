@@ -20,6 +20,22 @@
         *{
             font-family: "Geist", sans-serif;
         }
+        .toggle-btn {
+            color: #64748B;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .toggle-btn:hover {
+          background: #3B82F6;
+          color: white;
+        }
+
+        /* Active state */
+        .toggle-btn.active {
+          background: #3B82F6;
+          color: white;
+        }
      </style>
 </head>
 <body class="bg-base-200">
@@ -30,15 +46,15 @@
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-8">
           <div class="bg-base-100 w-[80%] lg:w-[359px] h-[97px] content-center p-6 rounded-md shadow">
             <p class="text-[#323B49] text-sm font-semibold pb-1">Total</p>
-            <h2 id="totalJob" class="text-2xl font-bold">8</h2>
+            <h2 id="totalCount" class="text-2xl font-bold">8</h2>
           </div>
           <div class="bg-base-100 w-[80%] lg:w-[359px] h-[97px] content-center p-6 rounded-md shadow">
             <p class="text-[#323B49] text-sm font-semibold pb-1">Interview</p>
-            <h2 class="text-green-500 text-2xl font-bold">0</h2>
+            <h2 id="interviewCount" class="text-green-500 text-2xl font-bold">0</h2>
           </div>
           <div class="bg-base-100 w-[80%] lg:w-[359px] h-[97px] content-center p-6 rounded-md shadow">
             <p class="text-[#323B49] text-sm font-semibold pb-1">Rejected</p>
-            <h2 class="text-red-500 text-2xl font-bold">0</h2>
+            <h2 id="rejectedCount" class="text-red-500 text-2xl font-bold">0</h2>
           </div>
         </div>
       </div>
@@ -56,25 +72,25 @@
           </div>
         </div>
         <div class="pt-6 flex gap-4">
-          <button class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
-          rounded-md hover:bg-[#3B82F6] hover:text-white">All</button>
-          <button class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
-          rounded-md hover:bg-[#3B82F6] hover:text-white">Interview</button>
-          <button class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
-          rounded-md hover:bg-[#3B82F6] hover:text-white">Rejected</button>
+          <button id="toggle-all" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
+          rounded-md hover:bg-[#3B82F6] hover:text-white toggle-btn">All</button>
+          <button id="toggle-interview" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
+          rounded-md hover:bg-[#3B82F6] hover:text-white toggle-btn">Interview</button>
+          <button id="toggle-rejected" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
+          rounded-md toggle-btn">Rejected</button>
         </div>
       </div>
       <br>
       <div id="cards" class="card-section flex flex-col gap-4">
 
-        <!-- <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">Mobile First Corp</h2>
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">React Native Developer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -87,10 +103,10 @@
               Work on products used by millions of users worldwide.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
-        </div> -->
+        </div>
 
         <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
           <div class="flex justify-between">
@@ -99,7 +115,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">Web Designer & Developer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -111,8 +127,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
@@ -123,7 +139,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">Data Visualization Specialist</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -136,8 +152,8 @@
             </p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
@@ -148,7 +164,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">Backend Developer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -160,8 +176,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
@@ -172,7 +188,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">UI/UX Engineer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -184,8 +200,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Create beautiful and functional user interfaces for our suite of products. Strong design skills and frontend development expertise required.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>    
         
@@ -196,7 +212,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">JavaScript Developer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -208,8 +224,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Build enterprise applications with JavaScript and modern frameworks. We offer competitive compensation, health insurance, and professional development opportunities.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
@@ -220,7 +236,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">Full Stack Engineer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -232,8 +248,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.</p>
           </div>
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
@@ -244,7 +260,7 @@
               <p class="text-[#64748B] pt-1 text-sm lg:text-md">Senior Frontend Developer</p>
             </div>
             <div class="text-[#d9e2ed]">
-              <button class="cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
+              <button class="delete-btn cursor-pointer border w-8 h-8 rounded-full flex items-center justify-center">
                 <img src="./img/bin.png" alt="">
               </button>
             </div>
@@ -256,8 +272,8 @@
             <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.</p>
           </div>Join
           <div class="flex flex-col lg:flex-row gap-3">
-            <button class="border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
-            <button class="border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
+            <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
+            <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
           </div>
         </div>
 
