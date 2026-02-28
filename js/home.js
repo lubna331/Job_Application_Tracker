@@ -43,3 +43,40 @@ function toggleStyle(id){
     const selected = document.getElementById(id);
     selected.classList.add('bg-[#3B82F6]', 'text-white')
 }
+
+
+// get cards by id
+const allCards = document.getElementById('cards');
+
+allCards.addEventListener('click', function(event){
+    // get clicked element by "event.target"
+    let cardEvent = event.target;
+    // stop event bubble
+    if(!cardEvent.closest('button')) return;
+    const button = cardEvent.closest('button');
+    // get innetText of clicked button
+    const btnName = button.innerText;
+    //get parentNode to get the child which will be replaced
+    const getParent = button.parentNode.parentNode;
+    //also get the whole card to push into an array
+    const card = getParent.querySelector('.card');
+    //get the replace child
+    let applied = getParent.querySelector('.replace');
+    // console.log(btnName, applied);
+    //also clear array
+    removeFromArray(interviewList, card);
+    removeFromArray(rejectedList, card);
+    // finally replace the text and colors
+    applied.innerText = btnName;
+    applied.classList.remove('bg-green-100','text-[#10B981]');
+    applied.classList.remove('bg-red-100','text-[#EF4444]');
+    if(btnName === "INTERVIEW"){
+        applied.classList.add('bg-green-100','text-[#10B981]')
+        interviewList.push(card);
+    }
+    else if(btnName === "REJECTED"){
+        applied.classList.add('bg-red-100','text-[#EF4444]')
+        rejectedList.push(card);
+    }
+    countChildren();
+})
