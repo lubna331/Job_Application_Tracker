@@ -20,23 +20,7 @@
         *{
             font-family: "Geist", sans-serif;
         }
-        .toggle-btn {
-            color: #64748B;
-            background: white;
-            transition: 0.2s;
-        }
-
-        .toggle-btn:hover {
-          background: #3B82F6;
-          color: white;
-        }
-
-        /* Active state */
-        .toggle-btn.active {
-          background: #3B82F6;
-          color: white;
-        }
-     </style>
+      </style>
 </head>
 <body class="bg-base-200">
     <!-- Job application tracker -->
@@ -46,7 +30,7 @@
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-8">
           <div class="bg-base-100 w-[80%] lg:w-[359px] h-[97px] content-center p-6 rounded-md shadow">
             <p class="text-[#323B49] text-sm font-semibold pb-1">Total</p>
-            <h2 id="totalCount" class="text-2xl font-bold">8</h2>
+            <h2 id="totalCount" class="text-2xl font-bold">0</h2>
           </div>
           <div class="bg-base-100 w-[80%] lg:w-[359px] h-[97px] content-center p-6 rounded-md shadow">
             <p class="text-[#323B49] text-sm font-semibold pb-1">Interview</p>
@@ -72,18 +56,23 @@
           </div>
         </div>
         <div class="pt-6 flex gap-4">
-          <button id="toggle-all" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
-          rounded-md hover:bg-[#3B82F6] hover:text-white toggle-btn">All</button>
-          <button id="toggle-interview" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
-          rounded-md hover:bg-[#3B82F6] hover:text-white toggle-btn">Interview</button>
-          <button id="toggle-rejected" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
+          <!-- passing parameter to toggleStyle function in js -->
+          <button onclick="toggleStyle('toggle-all')" id="toggle-all" class="text-[#64748B] shadow-sm w-[80px] 
+          h-[32px] text-sm bg-base-100 cursor-pointer rounded-md toggle-btn">All</button>
+          <button onclick="toggleStyle('toggle-interview')" id="toggle-interview" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
+          rounded-md toggle-btn">Interview</button>
+          <button onclick="toggleStyle('toggle-rejected')" id="toggle-rejected" class="text-[#64748B] shadow-sm w-[80px] h-[32px] text-sm bg-base-100 cursor-pointer
           rounded-md toggle-btn">Rejected</button>
         </div>
       </div>
-      <br>
+     
+    </main>
+    <br>
+    <section class="card-section">
+       
       <div id="cards" class="card-section flex flex-col gap-4">
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">Mobile First Corp</h2>
@@ -108,7 +97,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">WebFlow Agency</h2>
@@ -132,7 +121,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">DataViz Solutions</h2>
@@ -157,7 +146,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">CloudFirst Inc</h2>
@@ -181,7 +170,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">Innovation Labs</h2>
@@ -205,7 +194,7 @@
           </div>
         </div>    
         
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">MegaCorp Solutions</h2>
@@ -229,7 +218,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">StartupXYZ</h2>
@@ -253,7 +242,7 @@
           </div>
         </div>
 
-        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px]">
+        <div class="card bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm">
           <div class="flex justify-between">
             <div>
               <h2 class="text-[#002C5C] text-lg lg:text-xl font-semibold">TechCorp Industries</h2>
@@ -269,8 +258,8 @@
             <p class="text-[#64748B] text-sm pt-4 pb-4">San Francisco, CA • Full-time • $130,000 - $175,000</p>
             <button class="w-34 h-10 bg-[#EEF4FF] text-[#002C5C] text-md font-medium p-1.5 rounded-md
                   cursor-pointer">NOT APPLIED</button>
-            <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.</p>
-          </div>Join
+            <p class="text-[#64748B] pt-2 pb-3 text-xs lg:text-md">Seeking a Frontend Developer experienced in React and TypeScript to build scalable web apps with a talented team.</p>
+          </div>
           <div class="flex flex-col lg:flex-row gap-3">
             <button class="interview-btn border w-30 h-10 text-lg rounded-md text-[#10B981] cursor-pointer">INTERVIEW</button>
             <button class="rejected-btn border w-30 h-10 text-lg rounded-md text-[#EF4444] cursor-pointer">REJECTED</button>
@@ -278,8 +267,8 @@
         </div>
 
       </div>
-    </main>
-    <br>
+      <br>
+    </section>
     <script src="./js/home.js"></script>
 </body>
 </html>
