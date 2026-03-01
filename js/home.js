@@ -42,6 +42,63 @@ function toggleStyle(id){
     // set new color on clicked button
     const selected = document.getElementById(id);
     selected.classList.add('bg-[#3B82F6]', 'text-white')
+
+    //-------->>> {3rd part} <<<-------- 
+    // render cards for tabs
+    // get tabs by id
+    const allTab = document.getElementById('cards');
+    const interviewTab = document.getElementById('interview-tab');
+    const rejectedTab = document.getElementById('rejected-tab');
+
+    // initially hide display for all tab
+    allTab.style.display = "none";
+    interviewTab.style.display = "none";
+    rejectedTab.style.display = "none";
+
+    // display "All"
+    if(id === "toggle-all"){
+        allTab.style.display = "block";
+    }
+
+    // display interview
+    if(id === "toggle-interview"){
+        interviewTab.style.display = "block";
+        interviewTab.innerHTML = "";
+        
+        if(interviewList.length === 0){
+            interviewTab.innerHTML = `
+                <div class="bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm flex items-center justify-center rounded-md mb-4">
+                    <h3 class="text-lg font-semibold text-gray-500">No jobs available</h3>
+                </div>
+            `;
+        }
+        for(let cardId of interviewList){
+            let original = document.querySelector(`.card[data-id="${cardId}"]`);
+            let copy = original.cloneNode(true);
+
+            interviewTab.appendChild(copy);
+        }
+    }
+
+    // display rejected
+    if(id === "toggle-rejected"){
+        rejectedTab.style.display = "block";
+        rejectedTab.innerHTML = "";
+        
+        if(rejectedList.length === 0){
+            rejectedTab.innerHTML = `
+                <div class="bg-base-100 w-[95%] h-[370px] lg:w-[1110px] lg:h-[280px] p-[24px] m-auto shadow-sm flex items-center justify-center rounded-md mb-4">
+                    <h3 class="text-lg font-semibold text-gray-500">No jobs available</h3>
+                </div>
+            `;
+        }
+        for(let cardId of rejectedList){
+            let original = document.querySelector(`.card[data-id="${cardId}"]`);
+            let copy = original.cloneNode(true);
+
+            rejectedTab.appendChild(copy);
+        }
+    }
 }
 
 
@@ -58,25 +115,42 @@ allCards.addEventListener('click', function(event){
     const btnName = button.innerText;
     //get parentNode to get the child which will be replaced
     const getParent = button.parentNode.parentNode;
+    
     //also get the whole card to push into an array
-    const card = getParent.querySelector('.card');
+    const cardId = getParent.dataset.id;
+    
     //get the replace child
     let applied = getParent.querySelector('.replace');
     // console.log(btnName, applied);
-    //also clear array
-    removeFromArray(interviewList, card);
-    removeFromArray(rejectedList, card);
+
     // finally replace the text and colors
     applied.innerText = btnName;
     applied.classList.remove('bg-green-100','text-[#10B981]');
     applied.classList.remove('bg-red-100','text-[#EF4444]');
+
     if(btnName === "INTERVIEW"){
         applied.classList.add('bg-green-100','text-[#10B981]')
-        interviewList.push(card);
+        if(!interviewList.includes(cardId)){
+            interviewList.push(cardId);
+        }
+        // remove if, it is present in rejected list (change accordingly)
+        if(rejectedList.includes(cardId)){
+            let index = rejectedList.indexOf(cardId)
+            rejectedList.splice(index,1);
+        }
     }
     else if(btnName === "REJECTED"){
         applied.classList.add('bg-red-100','text-[#EF4444]')
-        rejectedList.push(card);
+        if(!rejectedList.includes(cardId)){
+            rejectedList.push(cardId);
+        }
+        // remove if, it is present in INTERVIEW list (change accordingly)
+        if(interviewList.includes(cardId)){
+            let index = interviewList.indexOf(cardId)
+            interviewList.splice(index,1);
+        }
     }
     countChildren();
-})
+});
+
+
