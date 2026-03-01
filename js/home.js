@@ -1,5 +1,6 @@
 //-------->>> {2nd part} <<<--------
 // declare empty array for interview and rejected,
+
 let interviewList = [];
 let rejectedList = [];
 
@@ -13,11 +14,12 @@ const rejectedCount = document.getElementById("rejectedCount")
 
 // get the card and children to count (counting part)
 const getCards = document.getElementById("cards");
-
+const availableJobs = document.getElementById("available");
 // create function to count the card children (counting part)
 function countChildren(){
     //set total count's inner text
-    totalCount.innerText = getCards.children.length;
+    totalCount.innerText = getCards.childElementCount;
+    availableJobs.innerText =getCards.childElementCount;
     //set interview and rejected count from the interviewList and rejected array's length
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
@@ -42,13 +44,14 @@ function toggleStyle(id){
     // set new color on clicked button
     const selected = document.getElementById(id);
     selected.classList.add('bg-[#3B82F6]', 'text-white')
-
+    
     //-------->>> {3rd part} <<<-------- 
     // render cards for tabs
     // get tabs by id
     const allTab = document.getElementById('cards');
     const interviewTab = document.getElementById('interview-tab');
     const rejectedTab = document.getElementById('rejected-tab');
+    const displayJob = document.getElementById('displayJob');
 
     // initially hide display for all tab
     allTab.style.display = "none";
@@ -62,6 +65,7 @@ function toggleStyle(id){
 
     // display interview
     if(id === "toggle-interview"){
+        displayJob.classList.add('hidden');
         interviewTab.style.display = "block";
         interviewTab.innerHTML = "";
         
@@ -82,6 +86,7 @@ function toggleStyle(id){
 
     // display rejected
     if(id === "toggle-rejected"){
+        displayJob.classList.add('hidden');
         rejectedTab.style.display = "block";
         rejectedTab.innerHTML = "";
         
@@ -104,53 +109,77 @@ function toggleStyle(id){
 
 // get cards by id
 const allCards = document.getElementById('cards');
+function cardAction(conatiner){
+    conatiner.addEventListener('click', function(event){
+        // get clicked element by "event.target"
+        let cardEvent = event.target;
+        // stop event bubble
+        if(!cardEvent.closest('button')) return;
+        const button = cardEvent.closest('button');
+        
+        // get innetText of clicked button
+        const btnName = button.innerText;
+        //get parentNode to get the child which will be replaced
+        const getParent = button.parentNode.parentNode;
+        
+        //also get the whole card to push into an array
+        const cardId = Number(getParent.dataset.id);
+        
+        if(button.classList.contains('delete-btn')){
+            getParent.parentNode.remove();
+            deleteCard(cardId);
+            countChildren();
+            return;
+        }
+        //get the replace child
+        let applied = getParent.querySelector('.replace');
+        // console.log(btnName, applied);
 
-allCards.addEventListener('click', function(event){
-    // get clicked element by "event.target"
-    let cardEvent = event.target;
-    // stop event bubble
-    if(!cardEvent.closest('button')) return;
-    const button = cardEvent.closest('button');
-    // get innetText of clicked button
-    const btnName = button.innerText;
-    //get parentNode to get the child which will be replaced
-    const getParent = button.parentNode.parentNode;
+        // finally replace the text and colors
+        applied.innerText = btnName;
+        applied.classList.remove('bg-green-100','text-[#10B981]');
+        applied.classList.remove('bg-red-100','text-[#EF4444]');
+
+        if(btnName === "INTERVIEW"){
+            applied.classList.add('bg-green-100','text-[#10B981]')
+            if(!interviewList.includes(cardId)){
+                interviewList.push(cardId);
+            }
+            // remove if, it is present in rejected list (change accordingly)
+            if(rejectedList.includes(cardId)){
+                let index = rejectedList.indexOf(cardId)
+                rejectedList.splice(index,1);
+            }
+        }
+        else if(btnName === "REJECTED"){
+            applied.classList.add('bg-red-100','text-[#EF4444]')
+            if(!rejectedList.includes(cardId)){
+                rejectedList.push(cardId);
+            }
+            // remove if, it is present in INTERVIEW list (change accordingly)
+            if(interviewList.includes(cardId)){
+                let index = interviewList.indexOf(cardId)
+                interviewList.splice(index,1);
+            }
+        }
+
+        countChildren();
+    });
+}
+
+function deleteCard(cardId){
     
-    //also get the whole card to push into an array
-    const cardId = getParent.dataset.id;
-    
-    //get the replace child
-    let applied = getParent.querySelector('.replace');
-    // console.log(btnName, applied);
+    rejectedList = rejectedList.filter(function(id){
+        return id !== cardId;
+    })
 
-    // finally replace the text and colors
-    applied.innerText = btnName;
-    applied.classList.remove('bg-green-100','text-[#10B981]');
-    applied.classList.remove('bg-red-100','text-[#EF4444]');
-
-    if(btnName === "INTERVIEW"){
-        applied.classList.add('bg-green-100','text-[#10B981]')
-        if(!interviewList.includes(cardId)){
-            interviewList.push(cardId);
-        }
-        // remove if, it is present in rejected list (change accordingly)
-        if(rejectedList.includes(cardId)){
-            let index = rejectedList.indexOf(cardId)
-            rejectedList.splice(index,1);
-        }
-    }
-    else if(btnName === "REJECTED"){
-        applied.classList.add('bg-red-100','text-[#EF4444]')
-        if(!rejectedList.includes(cardId)){
-            rejectedList.push(cardId);
-        }
-        // remove if, it is present in INTERVIEW list (change accordingly)
-        if(interviewList.includes(cardId)){
-            let index = interviewList.indexOf(cardId)
-            interviewList.splice(index,1);
-        }
-    }
+    interviewList = interviewList.filter(function(id){
+        return id !== cardId;
+    })
     countChildren();
-});
+}
 
+cardAction(document.getElementById('cards'));
+cardAction(document.getElementById('interview-tab'));
+cardAction(document.getElementById('rejected-tab'));
 
