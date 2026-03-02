@@ -107,8 +107,8 @@ function toggleStyle(id){
 }
 
 
-// get cards by id
-const allCards = document.getElementById('cards');
+// create function event to make it work in every tab
+
 function cardAction(conatiner){
     conatiner.addEventListener('click', function(event){
         // get clicked element by "event.target"
@@ -123,11 +123,18 @@ function cardAction(conatiner){
         const getParent = button.parentNode.parentNode;
         
         //also get the whole card to push into an array
-        const cardId = Number(getParent.dataset.id);
-        
+        const cardId = String(getParent.dataset.id);
+        // delete card and update count
         if(button.classList.contains('delete-btn')){
             getParent.parentNode.remove();
-            deleteCard(cardId);
+            // deleteCard(cardId);
+            rejectedList = rejectedList.filter(function(job){
+                return String(job.id) !== cardId;
+            });
+
+            interviewList = interviewList.filter(function(job){
+                return String(job.id) !== cardId;
+            });
             countChildren();
             return;
         }
@@ -165,18 +172,6 @@ function cardAction(conatiner){
 
         countChildren();
     });
-}
-
-function deleteCard(cardId){
-    
-    rejectedList = rejectedList.filter(function(id){
-        return id !== cardId;
-    })
-
-    interviewList = interviewList.filter(function(id){
-        return id !== cardId;
-    })
-    countChildren();
 }
 
 cardAction(document.getElementById('cards'));
